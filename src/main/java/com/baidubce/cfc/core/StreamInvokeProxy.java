@@ -1,4 +1,4 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,11 +8,11 @@ import java.io.OutputStream;
 class StreamInvokeProxy extends InvokeProxy {
     StreamInvokeProxy(Class hdrcls) throws Exception {
         super(hdrcls);
-        handlerMethod = hdrcls.getMethod("handler", InputStream.class, OutputStream.class, FaasContext.class);
+        handlerMethod = hdrcls.getMethod("handler", InputStream.class, OutputStream.class, CfcContext.class);
     }
 
     @Override
-    public String invoke(String input, FaasContext context) throws Exception {
+    public String invoke(String input, CfcContext context) throws Exception {
         InputStream inputStream = new ByteArrayInputStream(input.getBytes("UTF-8"));
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String result = null;

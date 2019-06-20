@@ -1,4 +1,4 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import java.lang.reflect.Method;
 
@@ -47,5 +47,5 @@ abstract class InvokeProxy {
         return handlerName;
     }
 
-    public abstract String invoke(String input, FaasContext context) throws Exception;
+    public abstract String invoke(String input, CfcContext context) throws Exception;
 }

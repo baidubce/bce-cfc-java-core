@@ -1,8 +1,8 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import java.util.Map;
 
-public interface FaasContext {
+public interface CfcContext {
     String getRequestId();
 
     String getFunctionBrn();

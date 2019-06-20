@@ -1,4 +1,4 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,11 +30,11 @@ class RequestInvokeProxy extends InvokeProxy {
                     reqJavaType = TypeFactory.defaultInstance()
                             .constructParametricType((Class<?>)arg.getRawType(), clsParams);
                     handlerMethod = handlerClass.getMethod("handler",
-                            (Class<?>) arg.getRawType(), FaasContext.class);
+                            (Class<?>) arg.getRawType(), CfcContext.class);
                 } else {
                     reqJavaType = TypeFactory.defaultInstance().constructType(typeArgs[0]);
                     handlerMethod = handlerClass.getMethod("handler",
-                            (Class<?>)(typeArgs[0]), FaasContext.class);
+                            (Class<?>)(typeArgs[0]), CfcContext.class);
                 }
                 break;
             }
@@ -42,7 +42,7 @@ class RequestInvokeProxy extends InvokeProxy {
     }
 
     @Override
-    public String invoke(String input, FaasContext context) throws Exception {
+    public String invoke(String input, CfcContext context) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.INDENT_OUTPUT);
         Object request = null;

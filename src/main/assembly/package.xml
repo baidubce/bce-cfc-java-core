@@ -8,7 +8,7 @@
             <useProjectArtifact>true</useProjectArtifact>
             <useProjectAttachments>true</useProjectAttachments>
             <includes>
-                <include>com.baidubce.faas:*</include>
+                <include>com.baidubce.cfc:*</include>
             </includes>
             <outputDirectory>lib</outputDirectory>
         </dependencySet>

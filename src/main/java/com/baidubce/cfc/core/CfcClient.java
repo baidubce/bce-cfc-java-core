@@ -1,4 +1,4 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

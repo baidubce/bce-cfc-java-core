@@ -1,8 +1,8 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 import java.util.Map;
 
-class ContextImpl implements FaasContext {
+class ContextImpl implements CfcContext {
     private String requestId;
     private String functionBrn;
     private String functionName;

@@ -1,4 +1,4 @@
-package com.baidubce.faas.core;
+package com.baidubce.cfc.core;
 
 public class StsCredential {
     private String sessionToken;
