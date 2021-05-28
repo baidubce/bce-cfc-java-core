@@ -17,18 +17,22 @@ abstract class InvokeProxy {
         Class<?>[] interfaces = handlerClass.getInterfaces();
 
         InvokeProxy proxy = null;
-        for (Class<?> cls : interfaces) {
-            if (cls.getName().equals(StreamHandler.class.getName())) {
-                proxy = new StreamInvokeProxy(handlerClass);
-                break;
-            } else if (cls.getName().equals(RequestHandler.class.getName())) {
-                cls.getGenericInterfaces();
-                proxy = new RequestInvokeProxy(handlerClass);
-                break;
+        if (AbstractSpringBootHandler.class.isAssignableFrom(handlerClass)) {
+            proxy = new SpringBootInvokeProxy(handlerClass);
+        } else {
+            for (Class<?> cls : interfaces) {
+                if (cls.getName().equals(StreamHandler.class.getName())) {
+                    proxy = new StreamInvokeProxy(handlerClass);
+                    break;
+                } else if (cls.getName().equals(RequestHandler.class.getName())) {
+                    cls.getGenericInterfaces();
+                    proxy = new RequestInvokeProxy(handlerClass);
+                    break;
+                }
             }
         }
         if (proxy == null) {
-            throw new Exception(String.format("%s should implement StreamHandler or RequestHandler"));
+            throw new Exception("proxy should implement StreamHandler or RequestHandler or SpringBootHandleInterfacer");
         }
         proxy.newInstance();
         proxy.setHandlerName(handler);

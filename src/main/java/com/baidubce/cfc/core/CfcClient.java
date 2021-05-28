@@ -30,7 +30,7 @@ public class CfcClient {
         invokeProxy = null;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         CfcClient client = new CfcClient();
         client.waitInvoke();
     }
@@ -69,7 +69,6 @@ public class CfcClient {
                     context.setMemoryLimit(clientConfig.getFunctionMemory());
                     context.setRequestId(request.getRequestID());
                     requestID = request.getRequestID();
-
                     InvokeProxy handler = getHandlerProxy(clientConfig.getFunctionHandler());
                     assert handler != null;
                     result = handler.invoke(request.getEventObject(), context);
