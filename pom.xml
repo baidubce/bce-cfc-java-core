@@ -4,22 +4,44 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.baidubce.cfc</groupId>
-    <artifactId>bce-cfc-java-core</artifactId>
-    <version>2.1.0</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
-    <name>${project.groupId}:${project.artifactId}</name>
+    <groupId>com.baidu.cfc</groupId>
+    <artifactId>cfc-java-core</artifactId>
+    <version>2.1.1</version>
+
+    <name>cfc-java-core</name>
     <description>baidu bce cfc core api</description>
     <url>https://cloud.baidu.com/product/cfc.html</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <java.version>1.8</java.version>
+        <junit.version>4.13.1</junit.version>
+    </properties>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/baidubce/bce-cfc-java-core/issues</url>
+    </issueManagement>
+
     <scm>
-        <url>https://github.com/baidubce/bce-cfc-java-core.git</url>
+        <connection>scm:git:git://github.com/baidubce/bce-cfc-java-core.git</connection>
+        <developerConnection>scm:git:git@github.com:baidubce/bce-cfc-java-core.git</developerConnection>
+        <url>https://github.com/baidubce/bce-cfc-java-core</url>
     </scm>
+
 
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -70,37 +92,51 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <executions>
+                    <execution>
+                        <id>default-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
                 <configuration>
-                    <locale>en_US</locale>
-                    <encoding>UTF-8</encoding>
+                    <attach>true</attach>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -109,58 +145,38 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.4.1</version>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>assembly</goal>
+                            <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/main/assembly/package.xml</descriptor>
-                            </descriptors>
+                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>sonatype-nexus-staging</serverId>
-                            <nexusUrl>https://oss.sonatype.org</nexusUrl>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
