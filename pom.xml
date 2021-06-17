@@ -12,7 +12,7 @@
 
     <groupId>com.baidu.cfc</groupId>
     <artifactId>cfc-java-core</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
 
     <name>cfc-java-core</name>
     <description>baidu bce cfc core api</description>

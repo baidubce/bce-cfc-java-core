@@ -40,7 +40,7 @@ abstract class InvokeProxy {
     }
 
     private void newInstance() throws Exception {
-        handlerObject = handlerClass.newInstance();
+        handlerObject = handlerClass.getConstructor().newInstance();
     }
 
     public void setHandlerName(String handlerName) {

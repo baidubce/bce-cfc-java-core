@@ -55,7 +55,8 @@ class RequestInvokeProxy extends InvokeProxy {
         } else {
             request = mapper.readValue(input, reqJavaType);
         }
-        Object response = handlerMethod.invoke(handlerObject, request, context);
+        // Object response = handlerMethod.invoke(handlerObject, request, context);
+        Object response = ((RequestHandler) handlerObject).handler(request, context);
         if (response.getClass().equals(String.class) ||
                 response.getClass().equals(Integer.class) ||
                 response.getClass().equals(Boolean.class)) {

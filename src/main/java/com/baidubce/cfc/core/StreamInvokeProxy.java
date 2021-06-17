@@ -17,7 +17,8 @@ class StreamInvokeProxy extends InvokeProxy {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String result = null;
         try {
-            handlerMethod.invoke(handlerObject, inputStream, outputStream, context);
+            // handlerMethod.invoke(handlerObject, inputStream, outputStream, context);
+            ((StreamHandler) handlerObject).handler(inputStream, outputStream, context);
             result = outputStream.toString("UTF-8");
         } finally {
             inputStream.close();

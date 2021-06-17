@@ -15,7 +15,9 @@ class SpringBootInvokeProxy extends InvokeProxy {
         String result = null;
         try {
             request = mapper.readValue(input.getBytes("UTF-8"), APIGatewayProxyRequestEvent.class);
-            result = (String) handlerMethod.invoke(handlerObject, request);
+            // result = (String) handlerMethod.invoke(handlerObject, request);
+            Object response = ((SpringBootHandlerInterface) handlerObject).handler(request);
+            result = response.toString();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
